@@ -1,0 +1,5 @@
+1;Jack Sparrow;Kyiv;5031243;100000;12;35423;
+2;Bob Smith;New York;5034253;124324;23;123345;
+3;Alice Brown;Paris;5023433;21542;12;3452;
+4;Harry Potter;Hogwarts;5012432;10753;21;4353;
+5;Ron Weasley;Hogwarts;4013421;-50001;21431;34341234;

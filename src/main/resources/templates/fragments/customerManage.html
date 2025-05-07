@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer System</title>
+    <link rel="stylesheet" href="/css.css">
+</head>
+<body>
+
+<a href="/manage">
+    <button type="button">Update Table</button>
+</a>
+
+<a href="/clearTable">
+    <button type="button">Clear Table</button>
+</a>
+
+
+<a href="/loadFromTxt">
+    <button type="button">Load from txt</button>
+</a>
+
+<a href="/loadFromBin">
+    <button type="button">Load from bin</button>
+</a>
+
+<a href="/saveToTxt">
+    <button type="button">Save to txt</button>
+</a>
+
+<a href="/saveToBin">
+    <button type="button">Save to bin</button>
+</a>
+
+
+<h2>Customer Table</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>City</th>
+        <th>Card Number</th>
+        <th>Balance</th>
+        <th>Number of Purchases</th>
+        <th>Total spent</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="customer : ${customers}">
+        <td th:text="${customer.id}"></td>
+        <td th:text="${customer.customerName}"></td>
+        <td th:text="${customer.city}"></td>
+        <td th:text="${customer.cardNumber}"></td>
+        <td th:text="${customer.accBalance}"></td>
+        <td th:text="${customer.numberOfPurchases}"></td>
+        <td th:text="${customer.totalPurchases}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+<div class="main">
+    <div class="left_part">
+
+        <form action="/byFirstLetter" method="get">
+            <label for="prefix">Find customer by first letters:</label>
+            <input type="text" id="prefix" name="prefix" required placeholder="Enter first letters of the customer's name">
+            <button type="submit">Enter</button>
+        </form>
+
+
+        <form action="/byCreditRange" method="get">
+            <label>Find customers by credit card range:</label>
+            <label for="a"></label><input type="number" id="a" name="a" required placeholder="Enter a">
+            <label for="b"></label><input type="number" id="b" name="b" required placeholder="Enter b">
+            <button type="submit">Enter</button>
+        </form>
+
+        <form action="/byCustomerId" method="get">
+            <label for="ID">Find customer by ID:</label>
+            <input type="number" id="ID" name="ID" required placeholder="Enter customer ID">
+            <button type="submit">Enter</button>
+        </form>
+
+
+        <form action="/totalSpentByCity" method="get">
+            <label for="city">Total purchase by city:</label>
+            <input type="text" id="city" name="city" required placeholder="Enter city">
+            <button type="submit">Enter</button>
+        </form>
+
+        <div th:if="${total != null}">
+            <h3>Total purchases in city "<span th:text="${city}"></span>":
+                <span th:text="${total}"></span>
+            </h3>
+        </div>
+
+        <a href="/byNegative">
+            <button type="button">Find customers by negative balance</button>
+        </a>
+
+
+        <a href="/byTotalSpent">
+            <button type="button">Customers sort by total spent</button>
+        </a>
+
+        <a href="/findByCityAndName">
+            <button type="button">Sort customers by city and name</button>
+        </a>
+
+        <div th:each="entry : ${grouped}">
+            <h3 th:text="${entry.key}">City and Name</h3>
+            <ul>
+                <li th:each="customer : ${entry.value}">
+                    <span th:text="${customer.customerName}">Name</span> —
+                    <span th:text="${customer.city}">City</span>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+
+    <div class="right_part">
+        <div class="addCustomer">
+            <form action="/addCustomer">
+                <label>Add customer:</label>
+                <label for="_id"></label><input type="text" id="_id" name="_id" required placeholder="Enter ID">
+                <label for="name"></label><input type="text" id="name" name="name" required placeholder="Enter name">
+                <label for="_city"></label><input type="text" id="_city" name="_city" required placeholder="Enter city">
+                <label for="cardNumber"></label><input type="text" id="cardNumber" name="cardNumber" required placeholder="Enter card number">
+                <label for="accBalance"></label><input type="text" id="accBalance" name="accBalance" required placeholder="Enter balance">
+                <label for="numberOfPurchases"></label><input type="text" id="numberOfPurchases" name="numberOfPurchases" required placeholder="Enter number of purchases">
+                <label for="totalPurchases"></label><input type="text" id="totalPurchases" name="totalPurchases" required placeholder="Enter total purchases">
+                <button type="submit" class="btn btn-primary">Add Customer</button>
+            </form>
+        </div>
+        <div class="deleteCustomer">
+            <form action="/deleteCustomer" method="get">
+                <label for="delID">Remove customer:</label>
+                <input type="text" id="delID" name="delID" required placeholder="Enter customer ID">
+                <button type="submit">Enter</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
